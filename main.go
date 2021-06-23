@@ -118,10 +118,24 @@ func handleCreateCheckoutSession(r *events.APIGatewayProxyRequest) string {
 	req := checkoutSessionCreateReq{}
 	json.Unmarshal([]byte(r.Body), &req)
 
-	domainURL := os.Getenv("DOMAIN")
 	//domainURL := os.Getenv("DOMAIN")
+	domainURL := fmt.Sprintf("https://%s", req.Domain)
 	custEmail := req.Email
 	prodPriceIdent := req.Price
+
+	fmt.Println("Domain:", domainURL)
+
+	if domainURL == "" {
+		domainURL = os.Getenv("DOMAIN")
+	}
+
+	if custEmail == "" {
+		//return errot
+	}
+
+	if prodPriceIdent == "" {
+		//return errot
+	}
 
 	// Pulls the list of payment method types from environment variables (`.env`).
 	// In practice, users often hard code the list of strings.
